@@ -1,6 +1,8 @@
+#made using simplegui module of codeskulptor
 import simplegui
 message="Stop on integer number min 2/5 times to win."
 
+#globals
 counter = 0
 t = 0
 tries = 0
@@ -8,6 +10,7 @@ wins = 0
 last_stop = 0
 
 
+#formats the time in the format a:bc.d
 def format(t):
     global counter
     a = counter // 600
@@ -16,12 +19,13 @@ def format(t):
     d = counter%10
     return str(a) + ":" + str(b) + str(c) + "." + str(d)
 
-
+#starts the timer
 def start():
     global message
     message="Stop on whole number to win."
     timer.start()
     
+#stops the timer
 def stop():
     global tries
     global wins
@@ -48,7 +52,7 @@ def stop():
         message = "Try again"
     
   
-        
+ #resets the timer       
 def reset():
     global counter
     global tries
@@ -60,31 +64,33 @@ def reset():
     tries = 0
     last_stop = 0
     
-
+#increments counter every tenth of a second
 def tick():
     global counter
     counter += 1
     return counter
 
+#draws on the frame
 def draw(canvas):
     canvas.draw_text(message,(20,100),23,"Red")
     canvas.draw_text(format(t), (170, 160), 40, "Orange")
     canvas.draw_text(update_score(), (0, 25), 25, "White")
     
+#updates the score
 def update_score():
     global tries
     global wins
     return "Wins/tries : " + str(wins) + "/" + str(tries)
     
-
+#creates the frame
 frame = simplegui.create_frame("Stopwatch: The Game", 450, 300)
 
-
+#registers the handlers
 timer = simplegui.create_timer(100, tick)
 frame.set_draw_handler(draw)
 button1 = frame.add_button("Start", start, 50)
 button2 = frame.add_button("Stop", stop, 50)
 button3 = frame.add_button("Reset", reset, 50)
 
-
+#starts the frame
 frame.start()
